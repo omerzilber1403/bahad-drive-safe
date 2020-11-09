@@ -3,7 +3,6 @@ $(function () {
   document.addEventListener("touchstart", handleTouchStart, false);
   document.addEventListener("touchmove", handleTouchMove, false);
 });
-setInterval(moveRoad, 100);
 
 player = {
   x: screen.width / 3,
@@ -15,11 +14,18 @@ player = {
   speed: screen.width / 3,
   moving: false,
 };
+
 // [left,right]
 moving = [false, false];
 
 //position left = 0, center = 1, right =2,
 carPosition = 1;
+
+const playerSprite = new Image();
+playerSprite.src = "images/car_up.png";
+const background = new Image();
+background.src = "images/road.png";
+console.log(background);
 
 road1 = {
   y: 0,
@@ -27,13 +33,8 @@ road1 = {
 };
 
 road2 = {
-  y: screen.height,
+  y: -screen.height,
 };
-
-const playerSprite = new Image();
-playerSprite.src = "images/car_up.png";
-const background = new Image();
-background.src = "images/road.png";
 
 function init() {
   canvas = document.getElementById("canvas");
@@ -48,10 +49,11 @@ function drawSprite(img, sX, Sy, sW, sH, dX, dY, dW, dH) {
 }
 
 function animate() {
+  ctx.clearRect (0, 0, canvas.width, canvas.height);
   ctx.drawImage(background, 0, road1.y, screen.width, screen.height);
   ctx.drawImage(
     background,
-    screen.width,
+    0,
     road2.y,
     screen.width,
     screen.height
@@ -68,6 +70,7 @@ function animate() {
     player.height
   );
   movePlayer();
+  moveRoad();
   requestAnimationFrame(animate);
 }
 
@@ -135,4 +138,11 @@ function movePlayer() {
   }
 }
 
-
+function moveRoad() {
+  road1.y += road1.speed;
+  road2.y += road1.speed;
+  if (road1.y === screen.height) {
+    road1.y = 0;
+    road2.y = -screen.height;
+  }
+}
