@@ -5,10 +5,10 @@ $(function () {
 });
 
 player = {
-  x: screen.width / 3,
-  y: screen.height /1.5,
-  width: screen.width/4,
-  height: screen.height/4,
+  x: screen.width / 3.5,
+  y: screen.height /1.7,
+  width: screen.width/3,
+  height: screen.height/3,
   frameX: 0,
   frameY: 0,
   speed: 9,
