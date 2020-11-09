@@ -1,0 +1,115 @@
+@font-face {
+  font-family: valera;
+  src: url(fonts/VarelaRound-Regular.ttf);
+}
+
+* {
+  font-family: valera;
+  direction: rtl;
+  text-align: center;
+  margin: 0 auto;
+}
+
+body {
+  background-color: skyblue;
+  background-attachment: fixed;
+  background-size: 100vw 100vh;
+  width: 100%;
+  margin: 0 auto;
+  overflow: hidden;
+  text-align: center;
+}
+
+#grass {
+  position: absolute;
+  background-color: #268b07;
+  width: 100vw;
+  height: 45vh;
+  bottom: 0vh;
+}
+
+#home_road {
+  position: relative;
+  top: 12vh;
+  width: 100vw;
+  height: 20vh;
+}
+
+#title {
+  width: 100vw;
+  position: fixed;
+  top: 20vh;
+  font-size: 15vw;
+  font-weight: bolder;
+  color: #268b07;
+}
+
+#second_word {
+  color: black;
+}
+
+.buttons {
+  position: fixed;
+  width: 100vw;
+  top: 47vh;
+}
+
+button {
+  border: none;
+  border-radius: 2vw;
+  background-color: green;
+  color: white;
+  padding: 3vw 5vh;
+  text-align: center;
+  display: inline-block;
+  font-size: 4vw;
+  margin: 2vw 1vh;
+  cursor: pointer;
+  box-shadow: 0vw 1.5vh #113f03b7;
+}
+
+#home_car {
+  width: 40vw;
+  height: 9vh;
+  position: absolute;
+  right: -40vw;
+  top: 68vh;
+  animation: move_car 3s;
+}
+
+@keyframes move_car {
+  100% {
+    right: 60vw;
+  }
+}
+
+.instructions {
+    display: none;
+    z-index: 1;
+    background-color: rgba(255, 255, 255, 0.97);
+    border-radius: 5vw;
+    position: relative;
+    width: 85vw;
+    top: 10vh;
+    padding: 4vh 4vw 4vh 4vw;
+}
+
+#instructions_title {
+    font-size: 10vw;
+    font-weight: bolder;
+}
+
+.text {
+    font-size: 5vw;
+}
+
+#exit {
+    width: 10vw;
+    height: 6vh;
+    position: relative;
+}
+
+#exit:hover {
+    background-color: rgba(223, 62, 62, 0.24);
+    border-radius: 100%;
+}

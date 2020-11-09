@@ -3,15 +3,16 @@ $(function () {
   document.addEventListener("touchstart", handleTouchStart, false);
   document.addEventListener("touchmove", handleTouchMove, false);
 });
+setInterval(moveRoad, 100);
 
 player = {
-  x: screen.width / 3.5,
-  y: screen.height /1.7,
-  width: screen.width/3,
-  height: screen.height/3,
+  x: screen.width / 3,
+  y: screen.height / 1.7,
+  width: screen.width / 3,
+  height: screen.height / 3,
   frameX: 0,
   frameY: 0,
-  speed: 9,
+  speed: screen.width / 3,
   moving: false,
 };
 // [left,right]
@@ -19,6 +20,15 @@ moving = [false, false];
 
 //position left = 0, center = 1, right =2,
 carPosition = 1;
+
+road1 = {
+  y: 0,
+  speed: screen.height / 5,
+};
+
+road2 = {
+  y: screen.height,
+};
 
 const playerSprite = new Image();
 playerSprite.src = "images/car_up.png";
@@ -38,7 +48,14 @@ function drawSprite(img, sX, Sy, sW, sH, dX, dY, dW, dH) {
 }
 
 function animate() {
-  ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
+  ctx.drawImage(background, 0, road1.y, screen.width, screen.height);
+  ctx.drawImage(
+    background,
+    screen.width,
+    road2.y,
+    screen.width,
+    screen.height
+  );
   drawSprite(
     playerSprite,
     0,
@@ -108,12 +125,14 @@ function handleTouchMove(evt) {
 
 function movePlayer() {
   if (moving[0] && carPosition > 0) {
-    player.x -= screen.width/3;
+    player.x -= player.speed;
     moving[0] = false;
     carPosition -= 1;
   } else if (moving[1] && carPosition < 2) {
-    player.x += screen.width/3;
+    player.x += player.speed;
     moving[1] = false;
     carPosition += 1;
   }
 }
+
+
