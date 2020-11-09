@@ -29,7 +29,7 @@ console.log(background);
 
 road1 = {
   y: 0,
-  speed: screen.height / 5,
+  speed: screen.height / 70,
 };
 
 road2 = {
@@ -141,7 +141,7 @@ function movePlayer() {
 function moveRoad() {
   road1.y += road1.speed;
   road2.y += road1.speed;
-  if (road1.y === screen.height) {
+  if (road1.y > screen.height) {
     road1.y = 0;
     road2.y = -screen.height;
   }
