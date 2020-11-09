@@ -38,7 +38,7 @@ function drawSprite(img, sX, Sy, sW, sH, dX, dY, dW, dH) {
 }
 
 function animate() {
-  ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
+  ctx.drawImage(background, 0, 0, screen.width, screen.height);
   drawSprite(
     playerSprite,
     0,
