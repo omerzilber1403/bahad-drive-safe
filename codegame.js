@@ -5,10 +5,10 @@ $(function () {
 });
 
 player = {
-  x: 140,
-  y: 500,
-  width: 110,
-  height: 190,
+  x: screen.width / 3,
+  y: screen.height /1.5,
+  width: screen.width/4,
+  height: screen.height/4,
   frameX: 0,
   frameY: 0,
   speed: 9,
@@ -108,11 +108,11 @@ function handleTouchMove(evt) {
 
 function movePlayer() {
   if (moving[0] && carPosition > 0) {
-    player.x -= 130;
+    player.x -= screen.width/3;
     moving[0] = false;
     carPosition -= 1;
-} else if (moving[1] && carPosition <2) {
-    player.x += 130;
+  } else if (moving[1] && carPosition < 2) {
+    player.x += screen.width/3;
     moving[1] = false;
     carPosition += 1;
   }
