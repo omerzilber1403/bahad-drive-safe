@@ -5,7 +5,7 @@ $(function () {
 });
 
 player = {
-  x: screen.width / 3,
+  x: screen.width / 3.3,
   y: screen.height /1.7,
   width: screen.width/3,
   height: screen.height/3,
