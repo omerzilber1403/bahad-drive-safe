@@ -20,12 +20,26 @@ moving = [false, false];
 
 //position left = 0, center = 1, right =2,
 carPosition = 1;
+piratePosition = 1;
 
 const playerSprite = new Image();
 playerSprite.src = "images/car_up.png";
 const background = new Image();
 background.src = "images/road.png";
-console.log(background);
+
+var pirate = new Image();
+pirate.src = "images/pirate.png";
+
+pirates = {
+  src: "images/pirate.png",
+  x: screen.width / 2.5,
+  y: -screen.height / 8,
+  width: screen.width / 8,
+  height:  screen.width / 4,
+  frameX: 0,
+  frameY: 0,
+  speed: screen.width / 105,
+};
 
 road1 = {
   y: 0,
@@ -49,15 +63,9 @@ function drawSprite(img, sX, Sy, sW, sH, dX, dY, dW, dH) {
 }
 
 function animate() {
-  ctx.clearRect (0, 0, canvas.width, canvas.height);
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.drawImage(background, 0, road1.y, screen.width, screen.height);
-  ctx.drawImage(
-    background,
-    0,
-    road2.y,
-    screen.width,
-    screen.height
-  );
+  ctx.drawImage(background, 0, road2.y, screen.width, screen.height);
   drawSprite(
     playerSprite,
     0,
@@ -69,8 +77,21 @@ function animate() {
     player.width,
     player.height
   );
+  drawSprite(
+    pirate,
+    0,
+    0,
+    pirates.width,
+    pirates.height,
+    pirates.x,
+    pirates.y,
+    pirates.width,
+    pirates.height
+  );
+
   movePlayer();
   moveRoad();
+  movePirates();
   requestAnimationFrame(animate);
 }
 
@@ -145,4 +166,8 @@ function moveRoad() {
     road1.y = 0;
     road2.y = -screen.height;
   }
+}
+
+function movePirates() {
+  pirates.y += pirates.speed
 }
