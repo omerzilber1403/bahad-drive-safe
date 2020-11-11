@@ -13,13 +13,11 @@ player = {
   frameY: 0,
   speed: screen.width / 3,
   moving: false,
-  position: 1
+  position: 1,
 };
 
 // [left,right]
 moving = [false, false];
-
-
 
 const playerSprite = new Image();
 playerSprite.src = "images/car_up.png";
@@ -28,8 +26,10 @@ background.src = "images/road.png";
 
 var pirate = new Image();
 pirate.src = "images/pirate1.png";
+var pirate_img2 = new Image();
+pirate_img2.src = "images/pirate3.png";
 
-pirates = {
+pirate1 = {
   src: "images/pirate1.png",
   x: screen.width / 2.3,
   y: -screen.height / 8,
@@ -38,7 +38,19 @@ pirates = {
   frameX: 0,
   frameY: 0,
   speed: screen.width / 50,
-  position: 1
+  position: 1,
+};
+
+pirate2 = {
+  src: "images/pirate1.png",
+  x: screen.width / 2.3,
+  y: -screen.height * 2,
+  width: screen.width / 6,
+  height: screen.width / 4,
+  frameX: 0,
+  frameY: 0,
+  speed: screen.width / 50,
+  position: 1,
 };
 
 road1 = {
@@ -62,7 +74,6 @@ function drawSprite(img, sX, Sy, sW, sH, dX, dY, dW, dH) {
   ctx.drawImage(img, sX, Sy, sW, sH, dX, dY, dW, dH);
 }
 
-
 function movePlayer() {
   if (moving[0] && player.position > 0) {
     player.x -= player.speed;
@@ -84,32 +95,49 @@ function moveRoad() {
   }
 }
 
-function movePirates() {
-  pirates.y += pirates.speed;
-  if (pirates.y > screen.height) {
-    pirates.y = -screen.height / 8;
-    pirates.position = Math.round(Math.random() * 2);
+function movepirate1() {
+  pirate1.y += pirate1.speed;
+  if (pirate1.y > screen.height) {
+    pirate1.y = -screen.height / 8;
+    pirate1.position = Math.round(Math.random() * 2);
     pirate.src = "images/pirate" + (Math.round(Math.random() * 3) + 1) + ".png";
-    if (pirates.position === 0) {
-      pirates.x = screen.width / 2.3 + screen.width/3;
+    if (pirate1.position === 0) {
+      pirate1.x = screen.width / 2.3 + screen.width / 3;
     }
-    if (pirates.position === 1) {
-      pirates.x = screen.width / 2.3;
-    }
-    else {
-      pirates.x = screen.width / 2.3 - screen.width/3;
+    if (pirate1.position === 1) {
+      pirate1.x = screen.width / 2.3;
+    } else {
+      pirate1.x = screen.width / 2.3 - screen.width / 3;
     }
   }
-  handlePirateFrame();
+  handlePirateFrame(1);
+}
+
+function movepirate2() {
+  pirate2.y += pirate2.speed;
+  if (pirate2.y > screen.height) {
+    pirate2.y = -screen.height * Math.random() * 2;
+    pirate2.position = Math.round(Math.random() * 2);
+    pirate_img2.src = "images/pirate" + (Math.round(Math.random() * 3) + 1) + ".png";
+    if (pirate2.position === 0) {
+      pirate2.x = screen.width / 2.3 + screen.width / 3;
+    }
+    if (pirate2.position === 1) {
+      pirate2.x = screen.width / 2.3;
+    } else {
+      pirate2.x = screen.width / 2.3 - screen.width / 3;
+    }
+  }
+  handlePirateFrame(2);
 }
 
 let counterFrames = 0;
-function handlePirateFrame() {
+function handlePirateFrame(num) {
   if (counterFrames === 5) {
-    if (pirates.frameX < 3) {
-      pirates.frameX++;
+    if (eval("pirate" + num + ".frameX") < 3) {
+      eval("pirate" + num + ".frameX++");
     } else {
-      pirates.frameX = 0;
+      eval("pirate" + num + ".frameX = 0");
     }
     counterFrames = 0;
   }
@@ -136,14 +164,25 @@ function animate() {
     ctx.drawImage(background, 0, road2.y, screen.width, screen.height);
     drawSprite(
       pirate,
-      pirates.width * pirates.frameX,
-      pirates.height * pirates.frameY,
-      pirates.width,
-      pirates.height,
-      pirates.x,
-      pirates.y,
-      pirates.width,
-      pirates.height
+      pirate1.width * pirate1.frameX,
+      pirate1.height * pirate1.frameY,
+      pirate1.width,
+      pirate1.height,
+      pirate1.x,
+      pirate1.y,
+      pirate1.width,
+      pirate1.height
+    );
+    drawSprite(
+      pirate_img2,
+      pirate2.width * pirate2.frameX,
+      pirate2.height * pirate2.frameY,
+      pirate2.width,
+      pirate2.height,
+      pirate2.x,
+      pirate2.y,
+      pirate2.width,
+      pirate2.height
     );
     drawSprite(
       playerSprite,
@@ -156,12 +195,13 @@ function animate() {
       player.width,
       player.height
     );
+
     movePlayer();
     moveRoad();
-    movePirates();
+    movepirate1();
+    movepirate2();
   }
 }
-
 
 var xDown = null;
 var yDown = null;
@@ -233,18 +273,18 @@ function animate() {
   );
   drawSprite(
     pirate,
-    pirates.width * pirates.frameX,
-    pirates.height * pirates.frameY,
-    pirates.width,
-    pirates.height,
-    pirates.x,
-    pirates.y,
-    pirates.width,
-    pirates.height
+    pirate1.width * pirate1.frameX,
+    pirate1.height * pirate1.frameY,
+    pirate1.width,
+    pirate1.height,
+    pirate1.x,
+    pirate1.y,
+    pirate1.width,
+    pirate1.height
   );
 
   movePlayer();
   moveRoad();
-  movePirates();
+  movepirate1();
   requestAnimationFrame(animate);
 }*/
