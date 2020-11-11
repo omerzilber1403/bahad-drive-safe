@@ -89,7 +89,7 @@ function movePirates() {
   if (pirates.y > screen.height) {
     pirates.y = -screen.height / 8;
     pirates.position = Math.round(Math.random() * 2);
-    console.log(pirates.position);
+    pirate.src = "images/pirate" + (Math.round(Math.random() * 3) + 1) + ".png";
     if (pirates.position === 0) {
       pirates.x = screen.width / 2.3 + screen.width/3;
     }
