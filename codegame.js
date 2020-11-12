@@ -33,8 +33,8 @@ pirate1 = {
   src: "images/pirate1.png",
   x: screen.width / 2.3,
   y: -screen.height / 8,
-  width: screen.width / 6,
-  height: screen.width / 4,
+  width: 58.75,
+  height: 88.25,
   frameX: 0,
   frameY: 0,
   speed: screen.width / 50,
@@ -45,8 +45,8 @@ pirate2 = {
   src: "images/pirate1.png",
   x: screen.width / 2.3,
   y: -screen.height * 2,
-  width: screen.width / 6,
-  height: screen.width / 4,
+  width: 58.75,
+  height: 88.25,
   frameX: 0,
   frameY: 0,
   speed: screen.width / 50,
@@ -156,7 +156,7 @@ function handleAccidents() {
         pirate2.y &&
         pirate2.y >=
         player.y - player.height /2 &&
-        pirate2.position === pl+ayer.position)
+        pirate2.position === player.position)
   ) {
     window.location.assign("index.html");
   }
