@@ -99,15 +99,15 @@ function movepirate1() {
   pirate1.y += pirate1.speed;
   if (pirate1.y > screen.height) {
     pirate1.y = -screen.height / 8;
-    pirate1.position = Math.round(Math.random() * 2);
+    pirate1.position = Math.round(Math.random() * 3);
     pirate.src = "images/pirate" + (Math.round(Math.random() * 3) + 1) + ".png";
     if (pirate1.position === 0) {
-      pirate1.x = screen.width / 2.3 + screen.width / 3;
+      pirate1.x = screen.width / 2.3 - screen.width / 3;
     }
-    if (pirate1.position === 1) {
+    else if (pirate1.position === 1) {
       pirate1.x = screen.width / 2.3;
     } else {
-      pirate1.x = screen.width / 2.3 - screen.width / 3;
+      pirate1.x = screen.width / 2.3 + screen.width / 3;
     }
   }
   handlePirateFrame(1);
@@ -117,15 +117,16 @@ function movepirate2() {
   pirate2.y += pirate2.speed;
   if (pirate2.y > screen.height) {
     pirate2.y = -screen.height * Math.random() * 2;
-    pirate2.position = Math.round(Math.random() * 2);
-    pirate_img2.src = "images/pirate" + (Math.round(Math.random() * 3) + 1) + ".png";
+    pirate2.position = Math.round(Math.random() * 3);
+    pirate_img2.src =
+      "images/pirate" + (Math.round(Math.random() * 3) + 1) + ".png";
     if (pirate2.position === 0) {
-      pirate2.x = screen.width / 2.3 + screen.width / 3;
+      pirate2.x = screen.width / 2.3 - screen.width / 3;
     }
-    if (pirate2.position === 1) {
+    else if (pirate2.position === 1) {
       pirate2.x = screen.width / 2.3;
     } else {
-      pirate2.x = screen.width / 2.3 - screen.width / 3;
+      pirate2.x = screen.width / 2.3 + screen.width / 3;
     }
   }
   handlePirateFrame(2);
@@ -144,8 +145,24 @@ function handlePirateFrame(num) {
   counterFrames++;
 }
 
-let fps, fpsInterval, startTime, now, then, elapsed;
+function handleAccidents() {
+  if (
+    (player.y + player.height / 2 >=
+      pirate1.y &&
+      pirate1.y >=
+      player.y - player.height / 2 &&
+      pirate1.position === player.position) ||
+      (player.y + player.height / 2 >=
+        pirate2.y &&
+        pirate2.y >=
+        player.y - player.height / 2 &&
+        pirate2.position === player.position)
+  ) {
+    window.location.assign("index.html");
+  }
+}
 
+let fps, fpsInterval, startTime, now, then, elapsed;
 function startAnimating(fps) {
   fpsInterval = 1000 / fps;
   then = Date.now();
@@ -200,6 +217,7 @@ function animate() {
     moveRoad();
     movepirate1();
     movepirate2();
+    handleAccidents();
   }
 }
 
