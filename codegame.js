@@ -7,8 +7,8 @@ $(function () {
 player = {
   x: screen.width / 3,
   y: screen.height / 1.7,
-  width: screen.width / 3,
-  height: screen.height / 3,
+  width: 129,
+  height: 194,
   frameX: 0,
   frameY: 0,
   speed: screen.width / 3,
