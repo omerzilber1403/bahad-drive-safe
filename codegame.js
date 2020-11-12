@@ -147,15 +147,15 @@ function handlePirateFrame(num) {
 
 function handleAccidents() {
   if (
-    (player.y + player.height  >=
+    (player.y + player.height /2 >=
       pirate1.y &&
       pirate1.y >=
-      player.y - player.height  &&
+      player.y - player.height /2 &&
       pirate1.position === player.position) ||
-      (player.y + player.height >=
+      (player.y + player.height /2 >=
         pirate2.y &&
         pirate2.y >=
-        player.y - player.height &&
+        player.y - player.height /2 &&
         pirate2.position === pl+ayer.position)
   ) {
     window.location.assign("index.html");
