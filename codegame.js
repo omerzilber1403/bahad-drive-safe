@@ -2,6 +2,14 @@ $(function () {
   init();
   document.addEventListener("touchstart", handleTouchStart, false);
   document.addEventListener("touchmove", handleTouchMove, false);
+  $("button").on("click", function(event) {
+    if (event.currentTarget.id === "button2") {
+      window.location.assign("game.html");
+    }
+    else {
+      window.location.assign("index.html")
+    }
+  })
 });
 
 player = {
@@ -103,8 +111,7 @@ function movepirate1() {
     pirate.src = "images/pirate" + (Math.round(Math.random() * 3) + 1) + ".png";
     if (pirate1.position === 0) {
       pirate1.x = screen.width / 2.3 - screen.width / 3;
-    }
-    else if (pirate1.position === 1) {
+    } else if (pirate1.position === 1) {
       pirate1.x = screen.width / 2.3;
     } else {
       pirate1.x = screen.width / 2.3 + screen.width / 3;
@@ -122,8 +129,7 @@ function movepirate2() {
       "images/pirate" + (Math.round(Math.random() * 3) + 1) + ".png";
     if (pirate2.position === 0) {
       pirate2.x = screen.width / 2.3 - screen.width / 3;
-    }
-    else if (pirate2.position === 1) {
+    } else if (pirate2.position === 1) {
       pirate2.x = screen.width / 2.3;
     } else {
       pirate2.x = screen.width / 2.3 + screen.width / 3;
@@ -144,21 +150,20 @@ function handlePirateFrame(num) {
   }
   counterFrames++;
 }
-
+var req;
 function handleAccidents() {
   if (
-    (player.y + player.height /2 >=
-      pirate1.y &&
-      pirate1.y >=
-      player.y - player.height /2 &&
+    (player.y + player.height / 2 >= pirate1.y &&
+      pirate1.y >= player.y - player.height / 2 &&
       pirate1.position === player.position) ||
-      (player.y + player.height /2 >=
-        pirate2.y &&
-        pirate2.y >=
-        player.y - player.height /2 &&
-        pirate2.position === player.position)
+    (player.y + player.height / 2 >= pirate2.y &&
+      pirate2.y >= player.y - player.height / 2 &&
+      pirate2.position === player.position)
   ) {
-    window.location.assign("index.html");
+    cancelAnimationFrame(req);
+    $("#message").fadeIn();
+    $("#message").css("display", "flex");
+    
   }
 }
 
@@ -170,8 +175,9 @@ function startAnimating(fps) {
   animate();
 }
 
+
 function animate() {
-  requestAnimationFrame(animate);
+  req = requestAnimationFrame(animate);
   now = Date.now();
   elapsed = now - then;
   if (elapsed > fpsInterval) {
