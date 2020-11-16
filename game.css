@@ -54,3 +54,37 @@ button {
   border-radius: 10%;
   color: aliceblue;
 }
+#quiz {
+  display: none;
+  z-index: 1;
+  position: absolute;
+  width: 85vw;
+  height: 85vh;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 5vw;
+  flex-wrap: wrap;
+  background-color: cornflowerblue;
+  padding: 5vh 5vw 5vh 5vw;
+  color: aliceblue;
+  justify-content: space-between;
+  align-content: stretch;
+  border-style: double;
+  border-color: honeydew;
+}
+
+.text {
+  width: 100%;
+  background-color: rgba(0, 0, 139, 0.2);
+  display: flex;
+  justify-content: center;  
+  align-items: center;
+  border-radius: 1vw;
+}
+
+#question {
+  background-color:rgba(0, 0, 139, 0.397) ;
+  border-radius: 1vw;
+  color: aliceblue;
+}

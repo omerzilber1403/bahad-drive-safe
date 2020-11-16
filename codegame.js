@@ -2,16 +2,67 @@ $(function () {
   init();
   document.addEventListener("touchstart", handleTouchStart, false);
   document.addEventListener("touchmove", handleTouchMove, false);
-  $("button").on("click", function(event) {
+  $("button").on("click", function (event) {
     if (event.currentTarget.id === "button2") {
       window.location.assign("game.html");
+    } else {
+      window.location.assign("index.html");
     }
-    else {
-      window.location.assign("index.html")
+  });
+  $(".answer").on("click", function (event) {
+    if ($(this).attr("id").charAt(6) === quiz[rndNum].correctAnswer) {
+      console.log("hi");
+      $(this).css("background-color", "green");
+      setTimeout(function () {
+        $("#quiz").fadeOut();
+        policemanFrames = 0;
+        policeman.y = -170;
+        (road1.speed = screen.height / 70), counterQues++;
+        if (counterQues === 2) {
+          $("#message_text").text("הגעת ליעד בהצלחה!!");
+          $("#message").css("background-color", "green");
+          cancelAnimationFrame(req);
+          $("#message").fadeIn();
+        } else {
+          startAnimating(50);
+        }
+      }, 500);
+    } else {
+      $(this).css("background-color", "red");
+      setTimeout(function () {
+        $("#quiz").fadeOut();
+        $("#message").fadeIn();
+        $(this).css("background-color", "rgba(0, 0, 139, 0.2)");
+      }, 500);
     }
-  })
+  });
 });
 
+quiz = [
+  {
+    question: "מה זה מרחק עצירה?",
+    answers: [
+      "מרחק הכולל שרכב עובר מהרגע שבו הנהג או הנהגת הבחינו בצורך לעצור ועד לעצירתו המוחלטת של הרכב.",
+      "המרחק שלוקח לרכב לעצור מהרגע שהנהג לוחץ על הדוושה עד לעצירה הוחלטת",
+      "המרחק של הרכב מהשוליים בכל רגע נתון",
+      "המרחק שלוקח לעובר אורח לחצות במעבר החציה עד שהרמזור מתחלף לאדום",
+    ],
+    correctAnswer: "1",
+  },
+  {
+    question:
+      "נהגתם שעות מרובות על הכביש בלילה ואתם מרגישים שהעיניים שלכם נעצמות לאט לאט. מה עליכם לעשות?",
+    answers: [
+      "לעצור לשתות קפה ולהמשיך בנסיעה.",
+      "להגביר את הרדיו ולהישאר מפוקסים.",
+      "לעצור בצד הדרך במקום בטיחותי, לתפוס תנומה קלה, ורק כאשר מרגישים עירניים להמשיך בנסיעה.",
+      "אם היעד קרוב להמשיך לנסוע, ואם לא לעצור לתנומה קלה.",
+    ],
+    correctAnswer: "3",
+  },
+];
+var finishQuizes = [];
+var counterQues = 0;
 player = {
   x: screen.width / 3,
   y: screen.height / 1.7,
@@ -36,6 +87,9 @@ var pirate = new Image();
 pirate.src = "images/pirate1.png";
 var pirate_img2 = new Image();
 pirate_img2.src = "images/pirate3.png";
+
+var policemanImg = new Image();
+policemanImg.src = "images/policeman.png";
 
 pirate1 = {
   src: "images/pirate1.png",
@@ -68,6 +122,18 @@ road1 = {
 
 road2 = {
   y: -screen.height,
+};
+
+policeman = {
+  src: "images/pirate1.png",
+  x: screen.width / 3,
+  y: -170,
+  width: 142,
+  height: 170,
+  frameX: 0,
+  frameY: 0,
+  speed: screen.width / 70,
+  position: 1,
 };
 
 function init() {
@@ -148,8 +214,10 @@ function handlePirateFrame(num) {
     }
     counterFrames = 0;
   }
+
   counterFrames++;
 }
+
 var req;
 function handleAccidents() {
   if (
@@ -163,8 +231,36 @@ function handleAccidents() {
     cancelAnimationFrame(req);
     $("#message").fadeIn();
     $("#message").css("display", "flex");
-    
   }
+}
+
+var rndNum;
+function policemanArrive() {
+  pirate2.y = -screen.height / 8;
+  pirate1.y = -screen.height / 8;
+  policeman.y += road1.speed;
+  road1.speed -= road1.speed / 20;
+  road2.speed = road1.speed;
+  if (road2.speed < 0.5) {
+    cancelAnimationFrame(req);
+    rndNum = chooseRandomNumber(2);
+    console.log(finishQuizes);
+    $("#question").text(quiz[rndNum].question);
+    for (var i = 0; i < 4; i++) {
+      $("#answer" + (i + 1)).text(quiz[rndNum].answers[i]);
+    }
+    $("#quiz").fadeIn();
+    $("#quiz").css("display", "flex");
+  }
+}
+
+function chooseRandomNumber(questionAmount) {
+  numb = Math.round(Math.random() * (questionAmount - 1));
+  if (!finishQuizes.includes(numb)) {
+    finishQuizes.push(numb);
+    return numb;
+  }
+  chooseRandomNumber(questionAmount);
 }
 
 let fps, fpsInterval, startTime, now, then, elapsed;
@@ -175,7 +271,7 @@ function startAnimating(fps) {
   animate();
 }
 
-
+let policemanFrames = 0;
 function animate() {
   req = requestAnimationFrame(animate);
   now = Date.now();
@@ -218,12 +314,29 @@ function animate() {
       player.width,
       player.height
     );
+    drawSprite(
+      policemanImg,
+      0,
+      0,
+      policeman.width,
+      policeman.height,
+      policeman.x,
+      policeman.y,
+      policeman.width,
+      policeman.height
+    );
 
     movePlayer();
     moveRoad();
-    movepirate1();
-    movepirate2();
+    if (policemanFrames < 800) {
+      console.log(policemanFrames);
+      movepirate1();
+      movepirate2();
+    } else {
+      policemanArrive();
+    }
     handleAccidents();
+    policemanFrames++;
   }
 }
 
