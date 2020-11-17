@@ -1,3 +1,4 @@
+var savedAnswer;
 $(function () {
   init();
   document.addEventListener("touchstart", handleTouchStart, false);
@@ -9,12 +10,15 @@ $(function () {
       window.location.assign("index.html");
     }
   });
+
   $(".answer").on("click", function (event) {
     if ($(this).attr("id").charAt(6) === quiz[rndNum].correctAnswer) {
       console.log("hi");
       $(this).css("background-color", "green");
+      savedAnswer = $(this);
       setTimeout(function () {
         $("#quiz").fadeOut();
+        savedAnswer.css("background-color", "rgba(0, 0, 139, 0.2)");
         policemanFrames = 0;
         policeman.y = -170;
         (road1.speed = screen.height / 70), counterQues++;
@@ -59,7 +63,7 @@ quiz = [
       "אם היעד קרוב להמשיך לנסוע, ואם לא לעצור לתנומה קלה.",
     ],
     correctAnswer: "3",
-  },
+  }
 ];
 var finishQuizes = [];
 var counterQues = 0;
@@ -222,10 +226,10 @@ var req;
 function handleAccidents() {
   if (
     (player.y + player.height / 2 >= pirate1.y &&
-      pirate1.y >= player.y - player.height / 2 &&
+      pirate1.y >= player.y - player.height / 2.5 &&
       pirate1.position === player.position) ||
     (player.y + player.height / 2 >= pirate2.y &&
-      pirate2.y >= player.y - player.height / 2 &&
+      pirate2.y >= player.y - player.height / 2.5 &&
       pirate2.position === player.position)
   ) {
     cancelAnimationFrame(req);
@@ -243,8 +247,9 @@ function policemanArrive() {
   road2.speed = road1.speed;
   if (road2.speed < 0.5) {
     cancelAnimationFrame(req);
-    rndNum = chooseRandomNumber(2);
-    console.log(finishQuizes);
+    console.log("in");
+    chooseRandomNumber(2);
+    console.log(rndNum);
     $("#question").text(quiz[rndNum].question);
     for (var i = 0; i < 4; i++) {
       $("#answer" + (i + 1)).text(quiz[rndNum].answers[i]);
@@ -258,9 +263,12 @@ function chooseRandomNumber(questionAmount) {
   numb = Math.round(Math.random() * (questionAmount - 1));
   if (!finishQuizes.includes(numb)) {
     finishQuizes.push(numb);
-    return numb;
+    console.log(numb);
+    rndNum = numb;
   }
-  chooseRandomNumber(questionAmount);
+  else {
+    chooseRandomNumber(questionAmount);
+  }
 }
 
 let fps, fpsInterval, startTime, now, then, elapsed;
@@ -328,8 +336,7 @@ function animate() {
 
     movePlayer();
     moveRoad();
-    if (policemanFrames < 800) {
-      console.log(policemanFrames);
+    if (policemanFrames < 100) {
       movepirate1();
       movepirate2();
     } else {
@@ -371,21 +378,17 @@ function handleTouchMove(evt) {
     /*most significant*/
     if (xDiff > 0) {
       /* left swipe */
-      console.log("left");
       moving[0] = true;
     } else {
       /* right swipe */
-      console.log("right");
       moving[1] = true;
     }
   } else {
     if (yDiff > 0) {
       /* up swipe */
-      console.log("up");
     } else {
       /* down swipe */
-      console.log("down");
-    }
+s    }
   }
   /* reset values */
   xDown = null;
