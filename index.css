@@ -90,6 +90,7 @@ button {
     border-radius: 5vw;
     position: relative;
     width: 85vw;
+    height: 85vh;
     top: 10vh;
     padding: 4vh 4vw 4vh 4vw;
 }
@@ -100,7 +101,7 @@ button {
 }
 
 .text {
-    font-size: 5vw;
+  font-size: 4.5vw;
 }
 
 #exit {
