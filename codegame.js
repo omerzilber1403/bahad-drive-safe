@@ -143,14 +143,14 @@ quiz = [
       "לנסוע תמיד בנתיב שרחוק מהמדרכה כדי לא להחליק.",
     ],
     correctAnswer: "3",
-  }
+  },
 ];
 var finishQuizes = [];
 var counterQues = 0;
 player = {
-  x: screen.width / 3,
+  x: screen.width / 2.8,
   y: screen.height / 1.7,
-  width: 129,
+  width: 110,
   height: 194,
   frameX: 0,
   frameY: 0,
@@ -163,39 +163,43 @@ player = {
 moving = [false, false];
 
 const playerSprite = new Image();
-playerSprite.src = "images/car_up.png";
+playerSprite.src = "images/car_up2.png";
 const background = new Image();
 background.src = "images/road.png";
 
-var pirate = new Image();
-pirate.src = "images/pirate1.png";
-var pirate_img2 = new Image();
-pirate_img2.src = "images/pirate3.png";
+var car = new Image();
+car.src = "images/car1.png";
+var car_img2 = new Image();
+car_img2.src = "images/car2.png";
 
 var policemanImg = new Image();
 policemanImg.src = "images/policeman.png";
 
-pirate1 = {
-  src: "images/pirate1.png",
-  x: screen.width / 2.3,
-  y: -screen.height / 8,
-  width: 58.75,
-  height: 88.25,
+car1 = {
+  src: "images/car1.png",
+  x: screen.width / 2.7,
+  y: -screen.height ,
+  swidth: 119,
+  sheight: 231,
+  width: 100,
+  height: 170,
   frameX: 0,
   frameY: 0,
   speed: screen.width / 50,
   position: 1,
 };
 
-pirate2 = {
-  src: "images/pirate1.png",
-  x: screen.width / 2.3,
+car2 = {
+  src: "images/car2.png",
+  x: screen.width / 2.7,
   y: -screen.height * 2,
-  width: 58.75,
-  height: 88.25,
+  swidth: 124,
+  sheight: 236,
+  width: 100,
+  height: 170,
   frameX: 0,
   frameY: 0,
-  speed: screen.width / 50,
+  speed: screen.width / 40,
   position: 1,
 };
 
@@ -209,7 +213,7 @@ road2 = {
 };
 
 policeman = {
-  src: "images/pirate1.png",
+  src: "images/car1.png",
   x: screen.width / 3,
   y: -170,
   width: 142,
@@ -253,64 +257,83 @@ function moveRoad() {
   }
 }
 
-function movepirate1() {
-  pirate1.y += pirate1.speed;
-  if (pirate1.y > screen.height) {
-    pirate1.y = -screen.height / 8;
-    pirate1.position = Math.round(Math.random() * 3);
-    pirate.src = "images/pirate" + (Math.round(Math.random() * 3) + 1) + ".png";
-    if (pirate1.position === 0) {
-      pirate1.x = screen.width / 2.3 - screen.width / 3;
-    } else if (pirate1.position === 1) {
-      pirate1.x = screen.width / 2.3;
+var num;
+function movecar1() {
+  car1.y += car1.speed;
+  if (car1.y > screen.height) {
+    car1.y = -screen.height;
+    car1.position = Math.round(Math.random() * 3);
+    num = (Math.round(Math.random() * 3) + 1);
+    car.src = "images/car" + num + ".png";
+    if (num === 1) {
+      car1.swidth = 119;
+      car1.sheight = 231;
+    }
+    else if (num === 2) {
+      car1.swidth = 124;
+      car1.sheight = 236;
+    }
+    else if (num === 3) {
+      car1.swidth = 116;
+      car1.sheight = 232;
+    }
+    else {
+      car1.swidth = 115;
+      car1.sheight = 235;
+    }
+    if (car1.position === 0) {
+      car1.x = screen.width / 2.7 - screen.width / 3;
+    } else if (car1.position === 1) {
+      car1.x = screen.width / 2.7;
     } else {
-      pirate1.x = screen.width / 2.3 + screen.width / 3;
+      car1.x = screen.width / 2.7 + screen.width / 3;
     }
   }
-  handlePirateFrame(1);
 }
-
-function movepirate2() {
-  pirate2.y += pirate2.speed;
-  if (pirate2.y > screen.height) {
-    pirate2.y = -screen.height * Math.random() * 2;
-    pirate2.position = Math.round(Math.random() * 3);
-    pirate_img2.src =
-      "images/pirate" + (Math.round(Math.random() * 3) + 1) + ".png";
-    if (pirate2.position === 0) {
-      pirate2.x = screen.width / 2.3 - screen.width / 3;
-    } else if (pirate2.position === 1) {
-      pirate2.x = screen.width / 2.3;
+var num2, rndSpeed2;
+function movecar2() {
+  car2.y += car2.speed;
+  if (car2.y > screen.height) {
+    car2.y = -screen.height * Math.random() * 2;
+    car2.position = Math.round(Math.random() * 3);
+    num2 = (Math.round(Math.random() * 3) + 1);
+    car_img2.src = "images/car" + num2 + ".png";
+    if (num2 === 1) {
+      car2.swidth = 119;
+      car2.sheight = 231;
+    }
+    else if (num2 === 2) {
+      car2.swidth = 124;
+      car2.sheight = 236;
+    }
+    else if (num2 === 3) {
+      car2.swidth = 116;
+      car2.sheight = 232;
+    }
+    else {
+      car2.swidth = 115;
+      car2.sheight = 235;
+    }
+    if (car2.position === 0) {
+      car2.x = screen.width / 2.7 - screen.width / 3;
+    } else if (car2.position === 1) {
+      car2.x = screen.width / 2.7;
     } else {
-      pirate2.x = screen.width / 2.3 + screen.width / 3;
+      car2.x = screen.width / 2.7 + screen.width / 3;
     }
   }
-  handlePirateFrame(2);
 }
 
-let counterFrames = 0;
-function handlePirateFrame(num) {
-  if (counterFrames === 5) {
-    if (eval("pirate" + num + ".frameX") < 3) {
-      eval("pirate" + num + ".frameX++");
-    } else {
-      eval("pirate" + num + ".frameX = 0");
-    }
-    counterFrames = 0;
-  }
-
-  counterFrames++;
-}
 
 var req;
 function handleAccidents() {
   if (
-    (player.y + player.height / 2 >= pirate1.y &&
-      pirate1.y >= player.y - player.height / 2.5 &&
-      pirate1.position === player.position) ||
-    (player.y + player.height / 2 >= pirate2.y &&
-      pirate2.y >= player.y - player.height / 2.5 &&
-      pirate2.position === player.position)
+    (player.y + player.height / 1.1 > car1.y &&
+      car1.y > player.y - player.height / 1.1&&
+      car1.position === player.position) ||
+    (player.y + player.height / 1.1 > car2.y &&
+      car2.y > player.y - player.height / 1.1 &&
+      car2.position === player.position)
   ) {
     cancelAnimationFrame(req);
     $("#message").fadeIn();
@@ -320,8 +343,8 @@ function handleAccidents() {
 
 var rndNum;
 function policemanArrive() {
-  pirate2.y = -screen.height / 8;
-  pirate1.y = -screen.height / 8;
+  car2.y = -screen.height;
+  car1.y = -screen.height * 1.5;
   policeman.y += road1.speed;
   road1.speed -= road1.speed / 20;
   road2.speed = road1.speed;
@@ -369,33 +392,33 @@ function animate() {
     ctx.drawImage(background, 0, road1.y, screen.width, screen.height);
     ctx.drawImage(background, 0, road2.y, screen.width, screen.height);
     drawSprite(
-      pirate,
-      pirate1.width * pirate1.frameX,
-      pirate1.height * pirate1.frameY,
-      pirate1.width,
-      pirate1.height,
-      pirate1.x,
-      pirate1.y,
-      pirate1.width,
-      pirate1.height
+      car,
+      0,
+      0,
+      car1.swidth,
+      car1.sheight,
+      car1.x,
+      car1.y,
+      car1.width,
+      car1.height
     );
     drawSprite(
-      pirate_img2,
-      pirate2.width * pirate2.frameX,
-      pirate2.height * pirate2.frameY,
-      pirate2.width,
-      pirate2.height,
-      pirate2.x,
-      pirate2.y,
-      pirate2.width,
-      pirate2.height
+      car_img2,
+      0,
+      0,
+      car2.swidth,
+      car2.sheight,
+      car2.x,
+      car2.y,
+      car2.width,
+      car2.height
     );
     drawSprite(
       playerSprite,
       0,
       0,
-      player.width,
-      player.height,
+      181,
+      366,
       player.x,
       player.y,
       player.width,
@@ -412,12 +435,11 @@ function animate() {
       policeman.width,
       policeman.height
     );
-
     movePlayer();
     moveRoad();
-    if (policemanFrames < 100) {
-      movepirate1();
-      movepirate2();
+    if (policemanFrames < 1000) {
+      movecar1();
+      movecar2();
     } else {
       policemanArrive();
     }
@@ -492,19 +514,19 @@ function animate() {
     player.height
   );
   drawSprite(
-    pirate,
-    pirate1.width * pirate1.frameX,
-    pirate1.height * pirate1.frameY,
-    pirate1.width,
-    pirate1.height,
-    pirate1.x,
-    pirate1.y,
-    pirate1.width,
-    pirate1.height
+    car,
+    car1.width * car1.frameX,
+    car1.height * car1.frameY,
+    car1.width,
+    car1.height,
+    car1.x,
+    car1.y,
+    car1.width,
+    car1.height
   );
 
   movePlayer();
   moveRoad();
-  movepirate1();
+  movecar1();
   requestAnimationFrame(animate);
 }*/
