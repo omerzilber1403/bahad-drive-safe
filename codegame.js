@@ -205,7 +205,7 @@ car1 = {
   height: 170,
   frameX: 0,
   frameY: 0,
-  speed: screen.width / 50,
+  speed: screen.width / 40,
   position: 1,
 };
 
