@@ -361,7 +361,9 @@ function handleAccidents() {
       car2.y > player.y - player.height / 1.1 &&
       car2.position === player.position)
   ) {
-    cancelAnimationFrame(req);
+    setTimeout(function() {
+      cancelAnimationFrame(req);
+    },20)
     $("#message").css("display", "flex");
     $("#message").css("backgroundColor", "red");
     $("#message_text").text("תאונת דרכים!!");
