@@ -150,7 +150,7 @@ var counterQues = 0;
 player = {
   x: screen.width / 2.8,
   y: screen.height / 1.7,
-  width: 90,
+  width: 100,
   height: 194,
   frameX: 0,
   frameY: 0,
