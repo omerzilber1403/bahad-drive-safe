@@ -179,7 +179,7 @@ car1 = {
   src: "images/car1.png",
   x: screen.width / 2.7,
   y: -screen.height ,
-  swidth: 119,
+  swidth: 115,
   sheight: 231,
   width: 100,
   height: 170,
@@ -266,7 +266,7 @@ function movecar1() {
     num = (Math.round(Math.random() * 3) + 1);
     car.src = "images/car" + num + ".png";
     if (num === 1) {
-      car1.swidth = 119;
+      car1.swidth = 115;
       car1.sheight = 231;
     }
     else if (num === 2) {
