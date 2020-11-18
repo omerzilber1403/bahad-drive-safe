@@ -150,7 +150,7 @@ var counterQues = 0;
 player = {
   x: screen.width / 2.8,
   y: screen.height / 1.7,
-  width: 110,
+  width: 100,
   height: 194,
   frameX: 0,
   frameY: 0,
@@ -181,7 +181,7 @@ car1 = {
   y: -screen.height ,
   swidth: 115,
   sheight: 231,
-  width: 100,
+  width: 119,
   height: 170,
   frameX: 0,
   frameY: 0,
@@ -299,7 +299,7 @@ function movecar2() {
     num2 = (Math.round(Math.random() * 3) + 1);
     car_img2.src = "images/car" + num2 + ".png";
     if (num2 === 1) {
-      car2.swidth = 100;
+      car2.swidth = 119;
       car2.sheight = 231;
     }
     else if (num2 === 2) {
