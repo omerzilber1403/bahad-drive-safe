@@ -116,3 +116,19 @@ button {
   background-color: rgba(223, 62, 62, 0.24);
   border-radius: 100%;
 }
+
+.symbol {
+  width: 18vw;
+  height: 10vh;
+  position: absolute;
+  top: 2vh;
+  left: 2vw;
+}
+
+.symbol2 {
+  width: 18vw;
+  height: 10vh;
+  position: absolute;
+  top: 2vh;
+  right: 2vw;
+}
