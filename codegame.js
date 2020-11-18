@@ -266,7 +266,7 @@ function movecar1() {
     num = (Math.round(Math.random() * 3) + 1);
     car.src = "images/car" + num + ".png";
     if (num === 1) {
-      car1.swidth = 119;
+      car1.swidth = 125;
       car1.sheight = 231;
     }
     else if (num === 2) {
@@ -299,7 +299,7 @@ function movecar2() {
     num2 = (Math.round(Math.random() * 3) + 1);
     car_img2.src = "images/car" + num2 + ".png";
     if (num2 === 1) {
-      car2.swidth = 119;
+      car2.swidth = 125;
       car2.sheight = 231;
     }
     else if (num2 === 2) {
