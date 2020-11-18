@@ -149,7 +149,7 @@ var finishQuizes = [];
 var counterQues = 0;
 player = {
   x: screen.width / 2.8,
-  y: screen.height / 1.7,
+  y: screen.height / 1.8,
   width: screen.width/ 4,
   height: 194,
   frameX: 0,
