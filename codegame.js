@@ -12,31 +12,41 @@ $(function () {
   });
 
   $(".answer").on("click", function (event) {
+    savedAnswer = $(this);
     if ($(this).attr("id").charAt(6) === quiz[rndNum].correctAnswer) {
       console.log("hi");
       $(this).css("background-color", "green");
-      savedAnswer = $(this);
       setTimeout(function () {
         $("#quiz").fadeOut();
         savedAnswer.css("background-color", "rgba(0, 0, 139, 0.2)");
         policemanFrames = 0;
         policeman.y = -170;
         (road1.speed = screen.height / 70), counterQues++;
-        if (counterQues === 10) {
-          $("#message_text").text("הגעת ליעד בהצלחה!!");
+        if (counterQues === 11) {
+          $("#message_text").text('הגעת לבה"ד בהצלחה!!');
           $("#message").css("background-color", "green");
           cancelAnimationFrame(req);
           $("#message").fadeIn();
         } else {
-          startAnimating(50);
+          $("#message_text").text("תשובה נכונה! המשך בנסיעה");
+          $("#message").css("background-color", "green");
+          $("#message").fadeIn();
+          $("button").hide();
+          setTimeout(function () {
+            $("#message").fadeOut();
+            startAnimating(50);
+          },1000)
         }
       }, 500);
     } else {
+      $("#message").css("background-color", "red");
       $(this).css("background-color", "red");
       setTimeout(function () {
         $("#quiz").fadeOut();
+        $("button").show();
+        $("#message_text").text("טעות, התשובה הנכונה היא: "+ quiz[rndNum].answers[Number(quiz[rndNum].correctAnswer)-1]);
         $("#message").fadeIn();
-        $(this).css("background-color", "rgba(0, 0, 139, 0.2)");
+        savedAnswer.css("background-color", "rgba(0, 0, 139, 0.2)");
       }, 500);
     }
   });
@@ -143,6 +153,16 @@ quiz = [
       "לנסוע תמיד בנתיב שרחוק מהמדרכה כדי לא להחליק.",
     ],
     correctAnswer: "3",
+  },
+  {
+    question: "האם מותר לעצור בשולי הדרך?",
+    answers: [
+      "לא עוצרים בשולי הדרך, אלא אם כן אין מכוניות באזור",
+      "מותר לעצור בשולי הדרך, בנתאי שהשוליים מספיק רחבות",
+      "מותר",
+      "לא עוצרים בשולי הדרך, אלא במקרה של תקלה שאינה מאפשרת המשך נסיעה.",
+    ],
+    correctAnswer: "4",
   },
 ];
 var finishQuizes = [];
@@ -263,6 +283,9 @@ function movecar1() {
   if (car1.y > screen.height) {
     car1.y = -screen.height;
     car1.position = Math.round(Math.random() * 3);
+    while (car1.position === car2.position) {
+      car1.position = Math.round(Math.random() * 3);
+    }
     num = (Math.round(Math.random() * 3) + 1);
     car.src = "images/car" + num + ".png";
     if (num === 1) {
@@ -296,6 +319,9 @@ function movecar2() {
   if (car2.y > screen.height) {
     car2.y = -screen.height * Math.random() * 2;
     car2.position = Math.round(Math.random() * 3);
+    while (car1.position === car2.position) {
+      car2.position = Math.round(Math.random() * 3);
+    }
     num2 = (Math.round(Math.random() * 3) + 1);
     car_img2.src = "images/car" + num2 + ".png";
     if (num2 === 1) {
@@ -336,8 +362,11 @@ function handleAccidents() {
       car2.position === player.position)
   ) {
     cancelAnimationFrame(req);
-    $("#message").fadeIn();
     $("#message").css("display", "flex");
+    $("#message").css("backgroundColor", "red");
+    $("#message_text").text("תאונת דרכים!!");
+    $("button").fadeIn();
+    $("#message").fadeIn();
   }
 }
 
@@ -351,7 +380,7 @@ function policemanArrive() {
   if (road2.speed < 0.5) {
     cancelAnimationFrame(req);
     console.log("in");
-    chooseRandomNumber(10);
+    chooseRandomNumber(11);
     console.log(rndNum);
     $("#question").text(quiz[rndNum].question);
     for (var i = 0; i < 4; i++) {

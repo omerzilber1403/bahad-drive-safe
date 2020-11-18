@@ -24,7 +24,6 @@ body {
   z-index: 1;
   position: absolute;
   width: 85vw;
-  height: 50vh;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
@@ -39,14 +38,17 @@ body {
 }
 
 #message_text {
+  display: flex;
+  justify-content: center;  
+  align-items: center;
   width: 100%;
-  margin-top: 20%;
-  font-size: 10vw;
+  margin-top: 10%;
+  font-size: 8vw;
 }
 
 button {
-  margin: 0% 5% 20% 5%;
-  width: 30vw;
+  margin: 5% 5% 5% 5%;
+  padding: 2% 2% 2% 2%;
   height: 10vh;
   font-size: 5vw;
   background-color: black;
