@@ -115,11 +115,3 @@ position: absolute;
   z-index: 1;
 }
 
-#fill {
-  z-index: 1;
-  position: absolute;
-  top: 5.5vh;
-  width: 100vw;
-  height: 6vh;
-  background-color: rgba(0, 0, 0, 0.6);
-}
