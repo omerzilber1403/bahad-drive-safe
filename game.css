@@ -58,7 +58,7 @@ button {
 }
 #quiz {
   display: none;
-  z-index: 1;
+  z-index: 2;
   position: absolute;
   width: 85vw;
   height: 85vh;
@@ -89,4 +89,28 @@ button {
   background-color:rgba(0, 0, 139, 0.397) ;
   border-radius: 1vw;
   color: aliceblue;
+}
+
+#timer {
+position: absolute;
+  top: 5vh;
+  right: 2vh;
+  font-size: 5vw;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 7%;
+  color: aliceblue;
+  padding: 2vw 2vh 2vw 2vh;
+  z-index: 1;
+}
+
+#policemanCounts {
+  position: absolute;
+  top: 5vh;
+  left: 2vh;
+  font-size: 5vw;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 7%;
+  color: aliceblue;
+  padding: 2vw 2vh 2vw 2vh;
+  z-index: 1;
 }

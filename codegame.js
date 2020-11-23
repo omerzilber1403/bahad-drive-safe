@@ -1,5 +1,7 @@
 var savedAnswer;
+
 $(function () {
+  $("#stops").text(String(11 - finishQuizes.length));
   init();
   document.addEventListener("touchstart", handleTouchStart, false);
   document.addEventListener("touchmove", handleTouchMove, false);
@@ -12,6 +14,7 @@ $(function () {
   });
 
   $(".answer").on("click", function (event) {
+    $("#stops").text(String(11 - finishQuizes.length));
     savedAnswer = $(this);
     if ($(this).attr("id").charAt(6) === quiz[rndNum].correctAnswer) {
       console.log("hi");
@@ -21,12 +24,17 @@ $(function () {
         savedAnswer.css("background-color", "rgba(0, 0, 139, 0.2)");
         policemanFrames = 0;
         policeman.y = -170;
-        (road1.speed = screen.height / 70), counterQues++;
-        if (counterQues === 11) {
-          $("#message_text").text('הגעת לבה"ד בהצלחה!!');
+        road1.speed = screen.height / 70;
+        if (finishQuizes.length === 11) {
+          $("#message_text").text("עברת את כל הביקורות בהצלחה!!");
           $("#message").css("background-color", "green");
           cancelAnimationFrame(req);
+          $("button").hide();
           $("#message").fadeIn();
+          setTimeout(function () {
+            $("#message").fadeOut();
+            startAnimating(50);
+          }, 1000);
         } else {
           $("#message_text").text("תשובה נכונה! המשך בנסיעה");
           $("#message").css("background-color", "green");
@@ -35,7 +43,7 @@ $(function () {
           setTimeout(function () {
             $("#message").fadeOut();
             startAnimating(50);
-          },1000)
+          }, 1000);
         }
       }, 500);
     } else {
@@ -44,7 +52,11 @@ $(function () {
       setTimeout(function () {
         $("#quiz").fadeOut();
         $("button").show();
-        $("#message_text").text("טעות, התשובה הנכונה היא: "+ quiz[rndNum].answers[Number(quiz[rndNum].correctAnswer)-1]);
+        $("#message_text").text(
+          "טעות, התשובה הנכונה היא: " +
+            quiz[rndNum].answers[Number(quiz[rndNum].correctAnswer) - 1]
+        );
+        sessionStorage.setItem("answeredQuestions", String(finishQuizes));
         $("#message").fadeIn();
         savedAnswer.css("background-color", "rgba(0, 0, 139, 0.2)");
       }, 500);
@@ -166,11 +178,20 @@ quiz = [
   },
 ];
 var finishQuizes = [];
+if (
+  sessionStorage.getItem("answeredQuestions") !== null &&
+  sessionStorage.getItem("answeredQuestions") !== "undefined"
+) {
+  console.log(sessionStorage.getItem("answeredQuestions"));
+  finishQuizes = eval("[" + sessionStorage.getItem("answeredQuestions") + "]");
+  console.log(finishQuizes);
+}
+
 var counterQues = 0;
 player = {
   x: screen.width / 2.8,
   y: screen.height / 1.8,
-  width: screen.width/ 4,
+  width: screen.width / 4,
   height: 194,
   frameX: 0,
   frameY: 0,
@@ -198,10 +219,10 @@ policemanImg.src = "images/policeman.png";
 car1 = {
   src: "images/car1.png",
   x: screen.width / 2.7,
-  y: -screen.height ,
+  y: -screen.height,
   swidth: 115,
   sheight: 231,
-  width: screen.width/ 4,
+  width: screen.width / 4,
   height: 170,
   frameX: 0,
   frameY: 0,
@@ -215,7 +236,7 @@ car2 = {
   y: -screen.height * 2,
   swidth: 124,
   sheight: 236,
-  width: screen.width/ 4,
+  width: screen.width / 4,
   height: 170,
   frameX: 0,
   frameY: 0,
@@ -243,6 +264,17 @@ policeman = {
   speed: screen.width / 70,
   position: 1,
 };
+
+function timer() {
+  $("#distance").html(Number($("#distance").text()) - 5500 / 5500);
+  if (Number($("#distance").text()) === 0) {
+    $("#message_text").text('מזל טוב! הגעת לבה"ד!!');
+    $("#message").css("background-color", "green");
+    cancelAnimationFrame(req);
+    $("button").show();
+    $("#message").fadeIn();
+  }
+}
 
 function init() {
   canvas = document.getElementById("canvas");
@@ -286,21 +318,18 @@ function movecar1() {
     while (car1.position === car2.position) {
       car1.position = Math.round(Math.random() * 3);
     }
-    num = (Math.round(Math.random() * 3) + 1);
+    num = Math.round(Math.random() * 3) + 1;
     car.src = "images/car" + num + ".png";
     if (num === 1) {
       car1.swidth = 125;
       car1.sheight = 231;
-    }
-    else if (num === 2) {
+    } else if (num === 2) {
       car1.swidth = 124;
       car1.sheight = 236;
-    }
-    else if (num === 3) {
+    } else if (num === 3) {
       car1.swidth = 116;
       car1.sheight = 232;
-    }
-    else {
+    } else {
       car1.swidth = 115;
       car1.sheight = 235;
     }
@@ -322,21 +351,18 @@ function movecar2() {
     while (car1.position === car2.position) {
       car2.position = Math.round(Math.random() * 3);
     }
-    num2 = (Math.round(Math.random() * 3) + 1);
+    num2 = Math.round(Math.random() * 3) + 1;
     car_img2.src = "images/car" + num2 + ".png";
     if (num2 === 1) {
       car2.swidth = 125;
       car2.sheight = 231;
-    }
-    else if (num2 === 2) {
+    } else if (num2 === 2) {
       car2.swidth = 124;
       car2.sheight = 236;
-    }
-    else if (num2 === 3) {
+    } else if (num2 === 3) {
       car2.swidth = 116;
       car2.sheight = 232;
-    }
-    else {
+    } else {
       car2.swidth = 115;
       car2.sheight = 235;
     }
@@ -350,24 +376,24 @@ function movecar2() {
   }
 }
 
-
 var req;
 function handleAccidents() {
   if (
     (player.y + player.height / 1.1 > car1.y &&
-      car1.y > player.y - player.height / 1.1&&
+      car1.y > player.y - player.height / 1.1 &&
       car1.position === player.position) ||
     (player.y + player.height / 1.1 > car2.y &&
       car2.y > player.y - player.height / 1.1 &&
       car2.position === player.position)
   ) {
-    setTimeout(function() {
+    setTimeout(function () {
       cancelAnimationFrame(req);
-    },20)
+    }, 20);
     $("#message").css("display", "flex");
     $("#message").css("backgroundColor", "red");
     $("#message_text").text("תאונת דרכים!!");
     $("button").fadeIn();
+    sessionStorage.setItem("answeredQuestions", String(finishQuizes));
     $("#message").fadeIn();
   }
 }
@@ -381,9 +407,7 @@ function policemanArrive() {
   road2.speed = road1.speed;
   if (road2.speed < 0.5) {
     cancelAnimationFrame(req);
-    console.log("in");
     chooseRandomNumber(11);
-    console.log(rndNum);
     $("#question").text(quiz[rndNum].question);
     for (var i = 0; i < 4; i++) {
       $("#answer" + (i + 1)).text(quiz[rndNum].answers[i]);
@@ -397,7 +421,6 @@ function chooseRandomNumber(questionAmount) {
   numb = Math.round(Math.random() * (questionAmount - 1));
   if (!finishQuizes.includes(numb)) {
     finishQuizes.push(numb);
-    console.log(numb);
     rndNum = numb;
   } else {
     chooseRandomNumber(questionAmount);
@@ -468,15 +491,19 @@ function animate() {
     );
     movePlayer();
     moveRoad();
-    if (policemanFrames < 1000) {
+    if (policemanFrames < 500) {
       movecar1();
       movecar2();
-    } else {
+    } else if (finishQuizes.length < 11) {
       policemanArrive();
+    } else {
+      movecar1();
+      movecar2();
     }
     handleAccidents();
     policemanFrames++;
   }
+  timer();
 }
 
 var xDown = null;
@@ -527,37 +554,3 @@ function handleTouchMove(evt) {
   xDown = null;
   yDown = null;
 }
-
-/*
-function animate() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  ctx.drawImage(background, 0, road1.y, screen.width, screen.height);
-  ctx.drawImage(background, 0, road2.y, screen.width, screen.height);
-  drawSprite(
-    playerSprite,
-    0,
-    0,
-    player.width,
-    player.height,
-    player.x,
-    player.y,
-    player.width,
-    player.height
-  );
-  drawSprite(
-    car,
-    car1.width * car1.frameX,
-    car1.height * car1.frameY,
-    car1.width,
-    car1.height,
-    car1.x,
-    car1.y,
-    car1.width,
-    car1.height
-  );
-
-  movePlayer();
-  moveRoad();
-  movecar1();
-  requestAnimationFrame(animate);
-}*/
