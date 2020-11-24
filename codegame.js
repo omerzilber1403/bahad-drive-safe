@@ -1,4 +1,5 @@
-var savedAnswer;
+var savedAnswer,
+  counterMistakes = 0;
 
 $(function () {
   $("#stops").text(String(11 - finishQuizes.length));
@@ -47,19 +48,27 @@ $(function () {
         }
       }, 500);
     } else {
+      policemanFrames = 0;
+        policeman.y = -170;
+        road1.speed = screen.height / 70;
       $("#message").css("background-color", "red");
       $(this).css("background-color", "red");
       setTimeout(function () {
         $("#quiz").fadeOut();
-        $("button").show();
+        $("button").hide();
         $("#message_text").text(
           "טעות, התשובה הנכונה היא: " +
             quiz[rndNum].answers[Number(quiz[rndNum].correctAnswer) - 1]
         );
+        counterMistakes++;
         sessionStorage.setItem("answeredQuestions", String(finishQuizes));
         $("#message").fadeIn();
         savedAnswer.css("background-color", "rgba(0, 0, 139, 0.2)");
       }, 500);
+      setTimeout(function () {
+        $("#message").fadeOut();
+        startAnimating(50);
+      }, 3000);
     }
   });
 });
@@ -68,7 +77,7 @@ quiz = [
   {
     question: "מה זה מרחק עצירה?",
     answers: [
-      "מרחק הכולל שרכב עובר מהרגע שבו הנהג או הנהגת הבחינו בצורך לעצור ועד לעצירתו המוחלטת של הרכב.",
+      "מרחק הכולל שרכב עובר מהרגע שבו הנהג/ת הבחינו בצורך לעצור ועד לעצירתו המוחלטת של הרכב.",
       "המרחק שלוקח לרכב לעצור מהרגע שהנהג לוחץ על הדוושה עד לעצירה הוחלטת",
       "המרחק של הרכב מהשוליים בכל רגע נתון",
       "המרחק שלוקח לעובר אורח לחצות במעבר החציה עד שהרמזור מתחלף לאדום",
@@ -149,7 +158,7 @@ quiz = [
   {
     question: 'מה ניתן ללמוד מתאונת הדרכים של רפי בובליל ועמרי שחר ז"ל',
     answers: [
-      "אסור באופן חד משמעי לנהוג בהשפעת אלכוהול ובעייפות",
+      "אסור באופן חד משמעי לנהוג בהשפעת עייפות",
       "יש לנהוג במהירות המותרת ולנהוג בתוך הנתיב",
       "אסור לנסוע עם יותר נוסעים ממספר המקומות ברכב",
       "אסור לנהוג ללא אורות בשעות הערב",
@@ -268,10 +277,17 @@ policeman = {
 function timer() {
   $("#distance").html(Number($("#distance").text()) - 5500 / 5500);
   if (Number($("#distance").text()) === 0) {
-    $("#message_text").text('מזל טוב! הגעת לבה"ד!!');
+    $("#message_text").text(
+      'מזל טוב! הגעת לבה"ד!! בדרך עברת ' +
+        CounterAccidents +
+        " תאונות, והיו לך " +
+        counterMistakes +
+        " תשובות שגויות."
+    );
     $("#message").css("background-color", "green");
     cancelAnimationFrame(req);
     $("button").show();
+    sessionStorage.setItem("answeredQuestions", "");
     $("#message").fadeIn();
   }
 }
@@ -314,9 +330,9 @@ function movecar1() {
   car1.y += car1.speed;
   if (car1.y > screen.height) {
     car1.y = -screen.height;
-    car1.position = Math.round(Math.random() * 3);
+    car1.position = Math.round(Math.random() * 2);
     while (car1.position === car2.position) {
-      car1.position = Math.round(Math.random() * 3);
+      car1.position = Math.round(Math.random() * 2);
     }
     num = Math.round(Math.random() * 3) + 1;
     car.src = "images/car" + num + ".png";
@@ -346,10 +362,10 @@ var num2, rndSpeed2;
 function movecar2() {
   car2.y += car2.speed;
   if (car2.y > screen.height) {
-    car2.y = -screen.height * Math.random() * 2;
-    car2.position = Math.round(Math.random() * 3);
+    car2.y = -screen.height * (Math.random() * 2 + 0.3);
+    car2.position = Math.round(Math.random() * 2);
     while (car1.position === car2.position) {
-      car2.position = Math.round(Math.random() * 3);
+      car2.position = Math.round(Math.random() * 2);
     }
     num2 = Math.round(Math.random() * 3) + 1;
     car_img2.src = "images/car" + num2 + ".png";
@@ -376,7 +392,8 @@ function movecar2() {
   }
 }
 
-var req;
+var req,
+  CounterAccidents = 0;
 function handleAccidents() {
   if (
     (player.y + player.height / 1.1 > car1.y &&
@@ -395,6 +412,21 @@ function handleAccidents() {
     $("button").fadeIn();
     sessionStorage.setItem("answeredQuestions", String(finishQuizes));
     $("#message").fadeIn();
+    $("button").hide();
+    setTimeout(function () {
+      $("#message").fadeOut();
+      startAnimating(50);
+    }, 1000);
+    if (
+      player.y + player.height / 1.1 > car1.y &&
+      car1.y > player.y - player.height / 1.1 &&
+      car1.position === player.position
+    ) {
+      car1.position = -1;
+    } else {
+      car2.position = -1;
+    }
+    CounterAccidents++;
   }
 }
 
